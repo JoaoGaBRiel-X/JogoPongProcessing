@@ -4,9 +4,10 @@ SoundFile bounceSound, pointSound;
 
 int gameState = 0;
 int menuSelection = 0;
+int menuSelection2 = 0;
 int settingsSelection = 0;
 int player1Sprite = 0;
-int player2Sprite = 0;
+int player2Sprite = 1;
 int ballSprite = 0;
 int backgroundSprite = 0;
 
@@ -39,7 +40,7 @@ boolean player2Up = false;
 boolean player2Down = false;
 
 void setup() {
-  size(800, 400);
+  size(800, 450);
   frameRate(60);
   smooth();
 
@@ -52,8 +53,7 @@ void setup() {
   ballSprites[2] = loadImage("BolaTeste3.png");
 
   backgroundSprites[0] = loadImage("windowsxp.jpg");
-  backgroundSprites[1] = loadImage("clima.jpg");
-  backgroundSprites[2] = loadImage("tempestade.jpg");
+  backgroundSprites[1] = loadImage("Tornado.jpg");
 
   player1 = playerSprites[player1Sprite];
   player2 = playerSprites[player2Sprite];
@@ -64,6 +64,7 @@ void setup() {
   pointSound = new SoundFile(this, "ponto.wav");
   
   ball.resize(30,30);
+  background.resize(800,450);
 }
 
 void draw() {
@@ -75,36 +76,193 @@ void draw() {
   if (gameState == 1) {
     drawGame();
   } else
+  if (gameState == 2) {
+    drawFinish();
+  }else
   if (gameState == 3) {
-    drawSettings();
+    drawSettings1();
+  } else 
+  if (gameState == 4) {
+    drawSettings2();
+  } else 
+  if (gameState == 5) {
+    drawCreditos();
+  } else 
+  if (gameState == 6) {
+    drawSettings3();
   }
 }
 
 void drawMenu() {
   background(0);
-  textSize(50);
+  textSize(90);
   textAlign(CENTER, CENTER);
   fill(255);
-  text("PONG MENU", width/2, 50);
+  text("PONG", width/2, 50);
 
-  textSize(25);
+  textSize(30);
   fill(255);
-  text("Jogar (ENTER)", width/2, height-120);
-  text("Configurações (M)", width/2, height-80);
-  text("Sair do Jogo (ESC)", width/2, height-40);
+  text("Jogar (J)", width/2, height-270);
+  for (int i = 0; i < 3; i++) {
+    if (i == menuSelection) {
+      fill(255, 0, 0);
+    } else {
+      fill(255);
+    }
+    if(i == 0){
+      text("Fácil", width/2 - 100, height/2);
+    }
+    if(i == 1){
+      text("Médio", width/2, height/2);
+    }
+    if(i == 2){
+      text("Difícil", width/2 + 100, height/2);
+    }
+    
+  }  
+  textSize(20);
+  fill(255);
+  text("Personalização: ", width/2, height-120);
+  text("Cenário (C) - Bola (B) - Paddle (P)", width/2, height-80);
+  text("Créditos (T)", width-700, height-40);
 }
 
-void drawSettings() {
+void drawCreditos() {
+  background(0);
+  textSize(90);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("PONG CRÉDITOS", width/2, 50);
+
+  textSize(25);
+  text("Integrantes do Projeto: ", width/2, height-250);
+  text("Enrico Giovani Fernandes Bariola - RA: 001202002911", width/2, height-210);
+  text("João Gabriel Moraes Carvalho - RA: 001202009395", width/2, height-170);
+  text("Kevin Balzan Lusiani - RA: 001202002897", width/2, height-130);
+  text("Voltar (ESPAÇO)", width/2, height-40);
+}
+
+void drawFinish() {
+  background(0);
+  textSize(90);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("PONG VENCEDOR", width/2, 50);
+
+  textSize(25);
+  text("Vencedor: ", width/2, height/2);
+  textSize(35);
+  if(player1Score > player2Score){
+    text("Player 1", width/2, height/2+30);
+  } else {
+    text("Player 2", width/2, height/2+30);
+  }
+  text("Voltar (ESPAÇO)", width/2, height-40);
+}
+
+void drawSettings1() {
   background(0);
   textSize(50);
   textAlign(CENTER, CENTER);
   fill(255);
-  text("PONG SETTINGS", width/2, 50);
+  text("PONG CENÁRIO", width/2, 50);
+  
+  textSize(25);
+  for (int i = 0; i < 2; i++) {
+    if (i == menuSelection) {
+      fill(255, 0, 0);
+    } else {
+      fill(255);
+    }
+    text("Background " + ((i == 0)?" - Windows XP" : " - Tempestade"), width/2, 150 + 60 * i);
+  }
 
   textSize(25);
   fill(255);
   text("Voltar (ESPAÇO)", width/2, height-40);
 }
+
+void drawSettings2() {
+  background(0);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("PONG BOLA", width/2, 50);
+  
+  textSize(25);
+  for (int i = 0; i < 3; i++) {
+    if (i == menuSelection) {
+      fill(255, 0, 0);
+    } else {
+      fill(255);
+    }
+    if(i == 0){
+      text("Bola Futebol", width/2, 150 + 60 * i);
+    }
+    if(i == 1){
+      text("Bola Basquete", width/2, 150 + 60 * i);
+    }
+    if(i == 2){
+      text("Bola Praia", width/2, 150 + 60 * i);
+    }
+    
+  }
+
+  textSize(25);
+  fill(255);
+  text("Voltar (ESPAÇO)", width/2, height-40);
+}
+void drawSettings3() {
+  background(0);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text("PONG PADDLE", width/2, 50);
+  
+  textSize(25);
+  text("Paddle Player 1", width/4, 120);
+  text("Paddle Player 2", width/4*3, 120);
+  for (int i = 0; i < 3; i++) {
+    if (i == menuSelection) {
+      fill(255, 0, 0);
+    } else {
+      fill(255);
+    }
+    if(i == 0){
+      text("Azul", width/4, 160 + 40 * i);
+    }
+    if(i == 1){
+      text("Vermelho", width/4, 160 + 40 * i);
+    }
+    if(i == 2){
+      text("Preto", width/4, 160 + 40 * i);
+    }
+    
+  }
+  for (int i = 0; i < 3; i++) {
+    if (i == menuSelection2) {
+      fill(255, 0, 0);
+    } else {
+      fill(255);
+    }
+    if(i == 0){
+      text("Azul", width/4*3, 160 + 40 * i);
+    }
+    if(i == 1){
+      text("Vermelho", width/4*3, 160 + 40 * i);
+    }
+    if(i == 2){
+      text("Preto", width/4*3, 160 + 40 * i);
+    }
+    
+  }
+
+  textSize(25);
+  fill(255);
+  text("Voltar (ESPAÇO)", width/2, height-40);
+}
+
+
 
 void drawGame() {
   background(background);
@@ -138,15 +296,17 @@ void drawGame() {
 
   // Ball collision with walls
   if (ballY - ballRadius < 0 || ballY + ballRadius > height) {
-    ballSpeedY *= -1;
     bounceSound.play();
+    ballSpeedY *= -1;
+    
   }
 
   // Ball collision with paddles
   if (ballX - ballRadius < player1.width && ballY > player1Y && ballY < player1Y + player1.height) {
     if (ballSpeedX < 0) {
-      ballSpeedX *= -1;
       bounceSound.play();
+      ballSpeedX *= -1;
+      
     }
   }
 
@@ -160,14 +320,14 @@ void drawGame() {
   // Ball scoring
   if (ballX - ballRadius < 0) {
     player2Score++;
-    resetBall();
     pointSound.play();
+    resetBall();
   }
 
   if (ballX + ballRadius > width) {
     player1Score++;
-    resetBall();
     pointSound.play();
+    resetBall();
   }
 
   // Draw paddles and ball
@@ -191,38 +351,56 @@ void resetBall() {
 
 void keyPressed() {
   if (gameState == 0) {
-    if(keyCode == ENTER){
+    if (keyCode == LEFT) {
+      menuSelection--;
+      if (menuSelection < 0) {
+        menuSelection = 2;
+      }
+    } else if (keyCode == RIGHT) {
+      menuSelection++;
+      if (menuSelection > 2) {
+        menuSelection = 0;
+      }
+    } else if(keyCode == 'J' || keyCode == 'j'){
+      if(menuSelection == 0){
+        ballSpeedX = 3;
+        ballSpeedY = 3;
+        player1Speed = 5;
+        player2Speed = 5;
+      } else if (menuSelection == 1){
+        ballSpeedX = 6;
+        ballSpeedY = 6;
+        player1Speed = 8;
+        player2Speed = 8;
+      } else if (menuSelection == 2){
+        ballSpeedX = 9;
+        ballSpeedY = 9;
+        player1Speed = 11;
+        player2Speed = 11;
+      }
       gameState = 1;
+      resetBall();
       player1Y = height/2 - player1.height/2;
       player2Y = height/2 - player2.height/2;
     } else
-    if (keyCode == 77) {
+    if (keyCode == 'C' || keyCode == 'c') {
+      menuSelection = 0;
       gameState = 3;
-      drawSettings();
+    } else
+    if (keyCode == 'B' || keyCode == 'b') {
+      menuSelection = 0;
+      gameState = 4;
+    } else
+    if (keyCode == 'T' || keyCode == 't') { 
+      menuSelection = 0;
+      gameState = 5;
+    } else
+    if (keyCode == 'P' || keyCode == 'p') { 
+      menuSelection = player1Sprite;
+      menuSelection2 = player2Sprite;
+      gameState = 6;
     }
     
-    //if (keyCode == UP) {
-    //  menuSelection--;
-    //  if (menuSelection < 0) {
-    //    menuSelection = 2;
-    //  }
-    //} else if (keyCode == DOWN) {
-    //  menuSelection++;
-    //  if (menuSelection > 2) {
-    //    menuSelection = 0;
-    //  }
-    //} else if (keyCode == ENTER) {
-    //  gameState = 1;
-    //  background = backgroundSprites[menuSelection];
-    //  //resetBall();
-    //  player1Y = height/2 - player1.height/2;
-    //  player2Y = height/2 - player2.height/2;
-    //} else if (keyCode == 32) {
-    //  gameState = 3;
-    //  settingsSelection = 0;
-    //} else if (keyCode == ESC) {
-    //  exit();
-    //}
   }
   if (gameState == 1) {
     if (keyCode == 'W' || keyCode == 'w') {
@@ -235,87 +413,89 @@ void keyPressed() {
       player2Down = true;
     }
   }
-  if (gameState == 3) {
+   if (gameState == 2) {
     
-    if (keyCode == UP) {
-      settingsSelection--;
-      if (settingsSelection < 0) {
-        settingsSelection = 3;
-      }
-    } else if (keyCode == DOWN) {
-      settingsSelection++;
-      if (settingsSelection > 3) {
-        settingsSelection = 0;
-      }
-    } else if (keyCode == LEFT) {
-      if (settingsSelection == 0) {
-        player1Sprite--;
-        if (player1Sprite < 0) {
-          player1Sprite = 2;
-        }
-        player1 = playerSprites[player1Sprite];
-      } else if (settingsSelection == 1) {
-        player2Sprite--;
-        if (player2Sprite < 0) {
-          player2Sprite = 2;
-        }
-        player2 = playerSprites[player2Sprite];
-      } else if (settingsSelection == 2) {
-        ballSprite--;
-        if (ballSprite < 0) {
-          ballSprite = 2;
-        }
-        ball = ballSprites[ballSprite];
-      } else if (settingsSelection == 3) {
-        backgroundSprite--;
-        if (backgroundSprite < 0) {
-          backgroundSprite = 2;
-        }
-      }
-    } else if (keyCode == RIGHT) {
-      if (settingsSelection == 0) {
-        player1Sprite++;
-        if (player1Sprite > 2) {
-          player1Sprite = 0;
-        }
-        player1 = playerSprites[player1Sprite];
-      } else if (settingsSelection == 1) {
-        player2Sprite++;
-        if (player2Sprite > 2) {
-          player2Sprite = 0;
-        }
-        player2 = playerSprites[player2Sprite];
-      } else if (settingsSelection == 2) {
-        ballSprite++;
-        if (ballSprite > 2) {
-          ballSprite = 0;
-        }
-        ball = ballSprites[ballSprite];
-      } else if (settingsSelection == 3) {
-        backgroundSprite++;
-        if (backgroundSprite > 2) {
-          backgroundSprite = 0;
-        }
-        background = backgroundSprites[backgroundSprite];
-      }
-    } else if (keyCode == 53) {
-      player1 = playerSprites[player1Sprite];
-      player2 = playerSprites[player2Sprite];
-      ball = ballSprites[ballSprite];
-      background = backgroundSprites[backgroundSprite];
-      gameState = 0;
-    } else 
     if (keyCode == 32) {
-      gameState = 0;
-      drawMenu();
-    }
-  } else 
-  if (gameState == 2) {
-    
-    if (keyCode == ENTER) {
       player1Score = 0;
       player2Score = 0;
-      resetBall();
+      gameState = 0;
+    }
+  }
+   if (gameState == 3) {    
+    if (keyCode == UP) {
+      menuSelection--;
+      if (menuSelection < 0) {
+        menuSelection = 1;
+      }
+    } else if (keyCode == DOWN) {
+      menuSelection++;
+      if (menuSelection > 1) {
+        menuSelection = 0;
+      }
+    } else if (keyCode == ENTER) {
+      gameState = 0;
+      background = backgroundSprites[menuSelection];
+      background.resize(800,450);
+    } else if (keyCode == 32) { //Espaço
+      gameState = 0;
+    }
+  }
+  if (gameState == 4) {    
+    if (keyCode == UP) {
+      menuSelection--;
+      if (menuSelection < 0) {
+        menuSelection = 2;
+      }
+    } else if (keyCode == DOWN) {
+      menuSelection++;
+      if (menuSelection > 2) {
+        menuSelection = 0;
+      }
+    } else if (keyCode == ENTER) {
+      gameState = 0;
+      ball = ballSprites[menuSelection];
+      ball.resize(30,30);
+    } else if (keyCode == 32) { //Espaço
+      gameState = 0;
+    }
+  }
+  if (gameState == 5) {    
+    if (keyCode == 32) { //Espaço
+      gameState = 0;
+    }
+  }
+  if (gameState == 6) {    
+    if (keyCode == 'W' || keyCode == 'w') {
+      menuSelection--;
+      if (menuSelection < 0) {
+        menuSelection = 2;
+      }
+    } else if (keyCode == 'S' || keyCode == 's') {
+      menuSelection++;
+      if (menuSelection > 2) {
+        menuSelection = 0;
+      }
+    } else if (keyCode == 'I' || keyCode == 'i') {
+      menuSelection2--;
+      if (menuSelection2 < 0) {
+        menuSelection2 = 2;
+      }
+    } else if (keyCode == 'K' || keyCode == 'k') {
+      menuSelection2++;
+      if (menuSelection2 > 2) {
+        menuSelection2 = 0;
+      }
+    } else if (keyCode == ENTER) {
+      gameState = 0;
+      player1Sprite = menuSelection;
+      player2Sprite = menuSelection2;
+      player1 = playerSprites[player1Sprite];
+      player2 = playerSprites[player2Sprite];
+            
+      player1.resize(12,109);
+      player2.resize(12,109);
+    } else if (keyCode == 32) { //Espaço
+      gameState = 0;
     }
   }
 }
