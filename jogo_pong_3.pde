@@ -127,7 +127,13 @@ void drawMenu() {
   fill(255);
   text("Personalização: ", width/2, height-120);
   text("Cenário (C) - Bola (B) - Paddle (P)", width/2, height-80);
-  text("Créditos (T)", width-700, height-40);
+  text("Créditos (T)", width/2, height-170);
+  fill(255);
+  text("Controles: ", width-600, height-40);
+  fill(0,0,255);
+  text("P1 = CIMA(W) - BAIXO(S)",width-450, height-40);
+  fill(255,0,0);
+  text("P2 = CIMA(I) - BAIXO(K)", width-250, height-40);
 }
 
 void drawCreditos() {
