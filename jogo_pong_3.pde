@@ -157,11 +157,12 @@ void drawFinish() {
   } else {
     text("Player 2", width/2, height/2+30);
   }
-  text("Voltar (ESPAÇO)", width/2, height-40);
+  text("Voltar para o MENU(ESPAÇO)", width/2, height-40);
 }
 
-void drawSettings1() {
-  background(0);
+void drawSettings1() { // Cenario
+  background.resize(800,450);
+  background(background);
   textSize(50);
   textAlign(CENTER, CENTER);
   fill(255);
@@ -180,6 +181,12 @@ void drawSettings1() {
   textSize(25);
   fill(255);
   text("Voltar (ESPAÇO)", width/2, height-40);
+  
+  if(menuSelection == 0){
+    background = backgroundSprites[0];
+  } else {
+    background = backgroundSprites[1];
+  }
 }
 
 void drawSettings2() {
