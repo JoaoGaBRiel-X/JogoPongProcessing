@@ -39,6 +39,9 @@ boolean player1Down = false;
 boolean player2Up = false;
 boolean player2Down = false;
 
+int rotacao = 0;
+int cont = 0;
+
 void setup() {
   size(800, 450);
   frameRate(60);
@@ -68,7 +71,7 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  //background(0);
 
   if (gameState == 0) {
     drawMenu();
@@ -132,7 +135,7 @@ void drawCreditos() {
   textSize(90);
   textAlign(CENTER, CENTER);
   fill(255);
-  text("PONG CRÉDITOS", width/2, 50);
+  text("PONG - CRÉDITOS", width/2, 50);
 
   textSize(25);
   text("Integrantes do Projeto: ", width/2, height-250);
@@ -147,7 +150,7 @@ void drawFinish() {
   textSize(90);
   textAlign(CENTER, CENTER);
   fill(255);
-  text("PONG VENCEDOR", width/2, 50);
+  text("PONG - VENCEDOR", width/2, 50);
 
   textSize(25);
   text("Vencedor: ", width/2, height/2);
@@ -166,7 +169,7 @@ void drawSettings1() { // Cenario
   textSize(50);
   textAlign(CENTER, CENTER);
   fill(255);
-  text("PONG CENÁRIO", width/2, 50);
+  text("PONG - CENÁRIO", width/2, 50);
   
   textSize(25);
   for (int i = 0; i < 2; i++) {
@@ -189,12 +192,13 @@ void drawSettings1() { // Cenario
   }
 }
 
-void drawSettings2() {
+void drawSettings2() { // Bola
+  ball.resize(30,30);
   background(0);
   textSize(50);
   textAlign(CENTER, CENTER);
   fill(255);
-  text("PONG BOLA", width/2, 50);
+  text("PONG - BOLA", width/2, 50);
   
   textSize(25);
   for (int i = 0; i < 3; i++) {
@@ -204,13 +208,13 @@ void drawSettings2() {
       fill(255);
     }
     if(i == 0){
-      text("Bola Futebol", width/2, 150 + 60 * i);
+      text("Bola Futebol", width/4, 150 + 60 * i);
     }
     if(i == 1){
-      text("Bola Basquete", width/2, 150 + 60 * i);
+      text("Bola Basquete", width/4, 150 + 60 * i);
     }
     if(i == 2){
-      text("Bola Praia", width/2, 150 + 60 * i);
+      text("Bola Praia", width/4, 150 + 60 * i);
     }
     
   }
@@ -218,6 +222,12 @@ void drawSettings2() {
   textSize(25);
   fill(255);
   text("Voltar (ESPAÇO)", width/2, height-40);
+  
+  translate(width/4*3, height/2);
+  rotate(radians(rotacao));
+  image(ballSprites[menuSelection], -50, -50, 100, 100);
+  if (rotacao >= 360) rotacao = 0;
+  rotacao += 5;
 }
 void drawSettings3() {
   background(0);
